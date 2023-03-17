@@ -1,7 +1,8 @@
-#include <iostream>
+
+#include "game_controler.h"
 
 int main() {
-    std::cout << "Hello, World" << std::endl;
-    std::cout << "test poprawnosci rozumowania" << std::endl;
+    game_controler controller();
+    controller.launch();
     return 0;
 }
