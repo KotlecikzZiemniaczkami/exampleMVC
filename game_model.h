@@ -7,12 +7,18 @@
 
 
 class game_model {
+
 public:
+
     int get_points();
-    int add_points(int p);
+    void add_points(int p);
+
 private:
+
     int points;
+
 };
 
 
 #endif //EXAMPLEMVC_GAME_MODEL_H
+
