@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <conio.h>
+#include <cstdlib>
 #include "game_model.h"
 
 class game_controller {

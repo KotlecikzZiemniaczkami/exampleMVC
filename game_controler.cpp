@@ -3,13 +3,31 @@
 //
 
 #include "game_controler.h"
+#include "game_view.h"
 
 game_controller::game_controller(game_model& model) : model(model) {
 }
 
+//dodatkowa funkcja pomagajaca w wyznaczaniu poziomow. jaka potege
+//liczby 10 przekroczy punktacja, taki jest poziom
+int potegi(int liczba){
+    int pomocnicza = 0;
+
+    while (liczba > 10){
+        liczba = liczba / 10;
+
+        pomocnicza ++;
+    }
+    return pomocnicza;
+}
+
 void game_controller::launch() {
-    this->update();
+    game_view view1;
     int key;
+    //wyswietlanie ekranu startowego
+    view1.menu();
+    key = _getch();
+    this->update();
     /*
      petla pobierajaca tak dlugo wartosci ascii poszczegulnych wpisanych klawiszy
      az ktoys z nich nie ma numeru 27 (escape)
@@ -37,36 +55,20 @@ void game_controller::launch() {
 }
 
 void game_controller::update() {
+    game_view view2;
+    int miernik_lvl;
+    int poziom = model.get_lvl();
     //system("cls") czysci konsole
     system("cls");
-    std::cout << "Console clicker!" << std::endl;
-    //this-> this jest wskaźnikiem na bieżący obiekt,
-    // który jest używany w C++ do odwoływania się do składowych obiektu wewnątrz jego metod.
-    // Gdy metoda jest wywoływana dla określonego obiektu, this zawiera adres pamięci tego obiektu.
-    //Operator -> jest używany w C++ do odwoływania się do składowych obiektów poprzez wskaźnik na obiekt.
-    // W kontekście metod obiektów, this-> służy do odwoływania się do składowych obiektu, do którego metoda została wywołana.
-    std::cout << "Points: " << this->model.get_points() << std::endl;
+    view2.interface(model);
+    miernik_lvl = potegi(model.get_points());
+    if (miernik_lvl > poziom){
+        model.higher_lvl();
+        model.reset_points();
+    }
+    if ((poziom == 2)&&(model.get_points() == 1)){
+        std::string sciezka = "https://www.youtube.com/watch?v=3mbvWn1EY6g";
+        std::string komenda = "start " + sciezka;
+        system(komenda.c_str());
+    }
 }
-//TO DO FEATER (FITCHER)
-//POINTSY MAJĄ BYĆ ODREBNA KLASA, A GAME CONTROLLER MA MIEC REFERENCJE DO TAMTEJ KLASY
-//poprawic kod
-//przeniesc konsole do nowej klasy game view i przylaczyc do pozostalych elementow
-//ma tam byc np to co powinno byc w update czyli to cale czyszczenie "gui"
-
-
-/*
- Pomysly:
- zrobic ekran startowy skladajacy sie z gwiazdek odpalajacy gre po wcisnieciu dowolnego klawisza
- (np. metoda _getch). Ekran powinien wygladac mniej wiecej tak:
- **************************
- * Zacznik kosmo clicker  *
- * press any button       *
- **************************
-
- po odpaleniu gry ma sie wyswietlic licznik punktow, a na dole pasek ladowania skladajacy sie
- ze znakow "|" (oczywiscie wszystko ma byc otoczone gwiazdkami). Oprocz tego ma byc wyswietlany poziom.
- gdy "|" zapelnia cale miejsce miedzy gwiazdkami, gracz przechodzi na kolejny poziom.
-
- ilosc klikniec potrzebna do narysowania jednej kreski "|" jest wyliczana ze wzoru lvl * 5,
- tym samym bedzie rosl poziom trudnosci
- */
