@@ -15,7 +15,7 @@ public:
     //ustawia domyslne wymiary
     explicit game_view(int szer = 30, int wys = 30);
     void menu();
-    void interface(game_model model);
+    void interface(game_model& model);
     friend void interfejs_gry();
 };
 

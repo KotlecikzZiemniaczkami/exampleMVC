@@ -41,7 +41,7 @@ void game_view::menu() {
 }
 
 
-void game_view::interface(game_model model1) {
+void game_view::interface(game_model& model1) {
     int wynik = model1.get_points();
     int dl_wyniku = to_string(wynik).length();
 
