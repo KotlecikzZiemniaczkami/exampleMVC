@@ -5,7 +5,8 @@
 #include "game_controler.h"
 #include "game_view.h"
 
-game_controller::game_controller(game_model& model) : model(model) {
+//listy inicjalizacji po :
+game_controller::game_controller(game_model& model, game_view& view) : model(model), view(view) {
 }
 
 //dodatkowa funkcja pomagajaca w wyznaczaniu poziomow. jaka potege
@@ -22,10 +23,9 @@ int potegi(int liczba){
 }
 
 void game_controller::launch() {
-    game_view view1;
     int key;
     //wyswietlanie ekranu startowego
-    view1.menu();
+    view.menu();
     key = _getch();
     this->update();
     /*
@@ -55,12 +55,11 @@ void game_controller::launch() {
 }
 
 void game_controller::update() {
-    game_view view2;
     int miernik_lvl;
     int poziom = model.get_lvl();
     //system("cls") czysci konsole
     system("cls");
-    view2.interface(model);
+    view.interface(model);
     miernik_lvl = potegi(model.get_points());
     if (miernik_lvl > poziom){
         model.higher_lvl();

@@ -3,7 +3,7 @@
 //
 #include "game_view.h"
  using namespace std;
-game_view::game_view(int szer, int wys) {
+game_view::game_view(game_model& model1, int szer, int wys) : model1(model1) {
     this->x = szer;
     this->y = wys;
 
@@ -41,7 +41,11 @@ void game_view::menu() {
 }
 
 
-void game_view::interface(game_model& model1) {
+
+
+
+void game_view::interface(game_model& model1){
+
     int wynik = model1.get_points();
     int dl_wyniku = to_string(wynik).length();
 
